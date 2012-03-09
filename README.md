@@ -10,7 +10,7 @@ Then, with [Node.js] (http://nodejs.org) v0.6.x:
 	npm install -g coffee # if not already installed
 	npm install
 
-At [Tendril's developer site] (https://dev.tendrilinc.com), create an app to acquire OAuth2 app id and key
+At [Tendril's developer site] (https://dev.tendrilinc.com), create an app to acquire OAuth2 app id and key.  Then:
 
 	cp config/oauth.coffee.sample config/oauth.coffee
 
