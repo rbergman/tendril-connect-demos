@@ -1,0 +1,5 @@
+.api-guide
+  p.lead APIs Used
+  ul
+    - for api in apis
+      li: a(href='https://dev.tendrilinc.com/docs/'+api.path, target='_blank')= api.name

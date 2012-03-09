@@ -1,0 +1,5 @@
+.alert.alert-success: strong= model.data.feed.title
+p
+#graph(style='width: 940px; height: 420px;')
+script(type='application/json', id='json')!= jsonFrom(model)
+script(src='/js/greenbutton.js')

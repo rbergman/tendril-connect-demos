@@ -1,0 +1,51 @@
+.home
+  p
+  - if (user)
+    ul.thumbnails
+      li.span4
+        .thumbnail
+          h3: a(href='/user') User
+          p Examples of accessing and using various forms of user data.
+      li.span4
+        .thumbnail
+          h3: a(href='/metering') Metering
+          p How to access and analyze meter and cost and consumption data.
+      li.span4
+        .thumbnail
+          h3: a(href='/pricing') Pricing
+          p How to access and make sense of energy pricing data.
+      li.span4
+        .thumbnail
+          h3: a(href='/devices') Devices
+          p A suite of illustrated device queries and interactions.
+      li.span4
+        .thumbnail
+          h3: a(href='/comparisons') Comparisons
+          p Putting cost and consumption comparison data to use.
+      li.span4
+        .thumbnail
+          h3: a(href='/greenbutton') Green Button
+          p Green Button data download for cost and consumption analysis.
+  - else
+    .messages
+      .alert
+        div
+          p
+            div To access the demos you must log in with one of the following users:
+          table.table.table-bordered.table-condensed(style='background: #fff; color: #666')
+            thead
+              tr
+                th.centered User Name
+                th.centered Password
+                th.centered Pricing Program
+                th.centered Usage Amount
+                th.centered Has HAN?
+            tbody
+              - for u in users
+                tr
+                  td.centered= u.name
+                  td.centered password
+                  td.centered= u.program
+                  td.centered= u.usage
+                  td.centered= u.han
+          p

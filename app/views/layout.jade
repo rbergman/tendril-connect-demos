@@ -1,0 +1,58 @@
+!!!
+html
+  head
+    title= title
+    != css('/css/application.css')
+    script(src='//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js')
+    script window.jQuery || document.write('<scr'+'ipt src="/js/jquery-1.7.1.min.js"><\/scr'+'ipt>')
+  body
+    #header
+      .navbar.navbar-fixed-top
+        .navbar-inner
+          .container
+            a.btn.btn-navbar(data-toggle='collapse', data-target='.nav-collapse')
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+            a.brand(href='/')= title
+            .nav-collapse
+              - if (user)
+                ul.nav
+                  li(class=activeClass('user'))
+                    a(href='/user') User
+                  li(class=activeClass('metering'))
+                    a(href='/metering') Metering
+                  li(class=activeClass('pricing'))
+                    a(href='/pricing') Pricing
+                  li(class=activeClass('comparisons'))
+                    a(href='/comparisons') Comparisons
+                  li(class=activeClass('devices'))
+                    a(href='/devices') Devices
+                  li(class=activeClass('greenbutton'))
+                    a(href='/greenbutton') Green Button
+              ul.nav.pull-right
+                li(class=activeClass('help'))
+                  a(href='/help') Help
+                li.divider-vertical
+                - if (user)
+                  li.dropdown
+                    a.username.dropdown-toggle(href='#', data-toggle='dropdown')
+                      | #{username}
+                      b.caret
+                    ul.dropdown-menu
+                      li: a(href='/user') User Information
+                      li: a(href='/session/disconnect') Log Out
+                - else
+                  li
+                    a(href='/session/connect') Log In
+    #body.container
+      != messages()
+      != partial(header)
+      p.lead
+      != body
+    #footer
+      .container
+        | By
+        a(href='http://tendrilinc.com', target="_blank") Tendril
+
+    != js('/js/application.js')

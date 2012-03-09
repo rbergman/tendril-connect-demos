@@ -1,0 +1,15 @@
+module.exports =
+  trace: false
+  consumer:
+    url: 'http://localhost:3001'
+    id: 'your oauth id'
+    secret:'your oauth secret'
+    scope: 'account billing consumption'
+    threshold: 60
+  provider:
+    url: 'https://dev.tendrilinc.com'
+    authorize: '/oauth/authorize'
+    accessToken: '/oauth/access_token'
+    logout: '/oauth/logout'
+    # @todo
+    # route: "sandbox"

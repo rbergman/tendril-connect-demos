@@ -1,0 +1,44 @@
+.row
+  .span3
+    .alert.alert-success: strong Device List
+    p
+    ul.nav.nav-pills.nav-stacked
+      - for device, i in model.devices()
+        li(class=(i === 0 ? 'active' : ''))
+          a(href='#device_'+i, data-toggle='pill')= device.name
+  .span9.pill-content
+    .alert.alert-success: strong Device Detail
+    p
+    - for device, i in model.data.devices.device
+      div(id='device_'+i, class='pill-pane'+(i === 0 ? ' active' : ''))
+        table.table.table-bordered
+          tbody
+            tr
+              td.span3.label-cell Marketing Name
+              td.value-cell= device.marketingName
+            tr
+              td.span3.label-cell Category
+              td.value-cell= device.category
+            tr
+              td.span3.label-cell Device Id
+              td.value-cell= device.deviceId
+            tr
+              td.span3.label-cell Network Id
+              td.value-cell= device.networkId
+        p
+        - if (device.extendedProperty && device.extendedProperty.length > 0)
+          - var ns = null
+          h3 Extended Properties
+          p
+          table.table.table-bordered
+            tbody
+              - for prop in device.extendedProperty
+                - if (ns !== prop.namespace)
+                  - ns = prop.namespace
+                  tr
+                    td.section-cell(colspan='2')= prop.namespace || "No Namespace"
+                tr
+                  td.span3.label-cell= prop.name
+                  - var values = (prop.value instanceof Array) ? prop.value : [prop.value]
+                  td.value-cell= values.join(', ')
+          p

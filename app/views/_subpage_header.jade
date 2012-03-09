@@ -1,0 +1,8 @@
+header
+  h1= section.title
+  p.lead= section.detail
+  .subnav
+    ul.nav.nav-pills
+      - for sp in subpages
+        li(class=activeClass(sp.name, subpage))
+          a(href='/'+section.name+'/'+sp.name)= sp.title

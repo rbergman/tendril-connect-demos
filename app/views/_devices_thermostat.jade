@@ -1,0 +1,47 @@
+- if (deviceActionFailed(model))
+  .alert.alert-error= model.failureMessage()
+- else
+  .row
+    .span6
+      table.table.table-bordered
+        tr
+          td.section-cell(colspan='2') Device Information
+        tr
+          td.span3.label-cell Name
+          td.value-cell= device.name
+        tr
+          td.span3.label-cell Marketing Name
+          td.value-cell= device.marketingName
+        tr
+          td.span3.label-cell Category
+          td.value-cell= device.category
+        tr
+          td.span3.label-cell Device ID
+          td.value-cell= device.deviceId
+        tr
+          td.span3.label-cell Network ID
+          td.value-cell= device.networkId
+        tr
+          td.section-cell(colspan='2') Request Profile
+        tr
+          td.span3.label-cell Effective Reponse Time
+          td.value-cell #{elapsed}ms
+    .span6
+      table.table.table-bordered
+        tr
+          td.section-cell(colspan='2') Device Data
+        tr
+          td.span3.label-cell Mode
+          td.value-cell= model.mode()
+        tr
+          td.span3.label-cell Temperature Scale
+          td.value-cell= model.temperatureScale()
+        tr
+          td.span3.label-cell Set Point
+          td.value-cell= model.setpoint()
+        tr
+          td.span3.label-cell Current Temp
+          td.value-cell= model.currentTemp()
+        tr
+          td.span3.label-cell Active Load Control Event
+          td.value-cell= model.activeLoadControlEvent()

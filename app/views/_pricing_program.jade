@@ -1,0 +1,101 @@
+- var program = model.program()
+- var MONTHS = "January February March April May June July August September October November December".split(" ")
+.row
+  .span3
+  
+    .alert.alert-success: strong Program Detail
+    p
+    .well
+      h3
+        | #{program.name}
+        br
+        small #{program.description}
+        br
+        small ID \##{program.id}
+        br
+        small= program.active ? "Active" : "Inactive"
+        
+    .alert.alert-success: strong Schedule List
+    p
+    ul.nav.nav-pills.nav-stacked
+      - for schedule, si in model.schedules()
+        li(class=(si === 0 ? 'active' : ''))
+          a(href='#schedule_'+si, data-toggle='pill')= schedule.name
+          
+    .alert.alert-success: strong Holidays
+    p
+    .well
+      ul.unstyled
+        - for holiday in model.holidays()
+          li: h4
+            | #{holiday.name}
+            br
+            small &nbsp; #{format(holiday.date)}
+            p
+            
+  .span9
+    .alert.alert-success: strong Schedule Detail
+    p
+    .pill-content
+      - for schedule, si in model.schedules()
+        div(id='schedule_'+si, class='pill-pane'+(si === 0 ? ' active' : ''))
+          h1
+            | #{schedule.name}
+            br
+            small Effective from #{format(schedule.effectiveDate)}
+          p
+          ul.nav.nav-tabs
+            li.active: a(href='#schedule_'+si+'_schedule', data-toggle='tab') Schedule
+            li: a(href='#schedule_'+si+'_rates', data-toggle='tab') Rates
+          .tab-content
+            .tab-pane.active(id='schedule_'+si+'_schedule')
+              table.table.table-bordered.table-condensed
+                - for month, mi in schedule.switchPointDefinition
+                  tr
+                    td.section-cell.span2.centered.jumbotron(rowspan='2')= MONTHS[mi]
+                    td.section-cell.centered(colspan='12') A.M.
+                    td.section-cell.centered(colspan='12') P.M.
+                  tr
+                    - for hour in [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+                      td.subsection-cell.centered= hour
+                  tr
+                    td: em Weekday
+                    - for hour in month.weekday
+                      td.centered= hour
+                  tr
+                    td: em Weekend
+                    - for hour in month.weekend
+                      td.centered= hour
+                  tr
+                    td: em Holiday
+                    - for hour in month.holiday
+                      td.centered= hour
+            .tab-pane(id='schedule_'+si+'_rates')
+              .accordion(id='schedule_'+si+'_rates_acc')
+                - for scheduleRate, sri in schedule.scheduleRatesList.scheduleRates
+                  .accordion-group
+                    .accordion-heading
+                      a.accordion-toggle(data-toggle='collapse', data-parent='schedule_'+si+'_rates_acc', href='#schedule_'+si+'_rates_'+sri)= scheduleRate.scheduleName
+                    .accordion-body.in.collapse(id='schedule_'+si+'_rates_'+sri, style='height: auto')
+                      .accordion-inner
+                        table.table.table-bordered
+                          tr
+                            td.span3.label-cell Effective From
+                            td.value-cell= format(scheduleRate.effectiveDate)
+                          tr
+                            td.span3.label-cell ID
+                            td.value-cell= scheduleRate.id
+                          tr
+                            td.span3.label-cell Consumption Baseline
+                            td.value-cell= scheduleRate.consumptionBaseline
+                        p
+                        - var rates = scheduleRate.rateList.rate
+                        table.table.table-bordered.table-striped
+                          - for rate, ri in rates
+                            tr
+                              td= rate["@key"]
+                              td= rate.label
+                              td
+                                - for tier, pti in rate.priceTier
+                                  h5 Price Tier #{pti + 1}
+                                  | Energy Price: $#{tier.energyPrice}, Delivery Charge: $#{tier.deliveryCharge}

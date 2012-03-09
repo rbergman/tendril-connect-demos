@@ -1,0 +1,40 @@
+.tabbable
+
+  ul.nav.nav-tabs
+    li.active: a(href='#demo', data-toggle='tab') Demo
+    - if (locals.error || locals.trace)
+      li: a(href='#log', data-toggle='tab') Request Log
+    - if (locals.apis)
+      li: a(href='#apis', data-toggle='tab') APIs
+
+  .tab-content
+
+    #demo.tab-pane.active
+      - if (locals.caption)
+        p.lead.caption= caption
+      - else
+        .alert
+          strong TODO:&nbsp;
+          | Not yet implemented!
+  
+      - if (locals.model)
+        != partial(section.name + "_" + subpage)
+      - else if (locals.notFound)
+        .alert
+          strong Not Found!
+          br
+          | No data of this type \(or one of its pre-requisites\) is available for user #{username}.
+      - else if (locals.error)
+        .alert.alert-error
+          strong Error!
+          br
+          - if (error.request)
+            | Check the Request Log tab for more information.
+          - else
+            | #{error.message}
+
+    - if (locals.error || locals.trace)
+      #log.tab-pane!= partial("request_log")
+
+    - if (locals.apis)
+      #apis.tab-pane!= partial("api_guide")

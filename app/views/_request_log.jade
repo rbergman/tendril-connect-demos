@@ -1,0 +1,12 @@
+.rpanel
+  - if (locals.trace && trace.length > 0)
+    != partial("request_trace")
+  - else if (locals.error)
+    - if (error.request && error.response)
+      != partial("request_trace", {trace: [error]})
+    - else
+      p.lead Error
+      alert.alert-error= locals.error.toString()
+  - else
+    p.lead Unknown Error
+    .alert.alert-error Unknown failure; check the server logs for more information

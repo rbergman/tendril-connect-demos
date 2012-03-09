@@ -1,0 +1,26 @@
+- for entry, ei in trace
+  .trace-entry
+    div(class='alert '+(statusClass(entry.response)))
+      strong: a(href='#trace_'+ei, data-toggle='trace-panel') #{entry.label} [#{entry.elapsed}ms]
+    div(id='trace_'+ei, class='trace-panel'+(trace.length>1?' hidden':''))
+      p.lead &rarr; Request
+      pre
+        - var req = entry.request
+        .line.strong HTTP/1.1 #{req.method} #{req.url.toString()}
+        - if (req.headers)
+          - each v, k in req.headers
+            .line.weak #{k}: #{v}
+        - if (req.body)
+          .line &nbsp;
+          .body= req.formatBody()
+      p.lead &larr; Response
+      pre
+        - var res = entry.response
+        .line.strong HTTP/1.1 #{res.statusCode} #{res.status}
+        - if (res.headers)
+          - each v, k in res.headers
+            .line.weak #{k}: #{v}
+        - if (res.body)
+          .line &nbsp;
+          .body= res.formatBody()
+      p &nbsp;
