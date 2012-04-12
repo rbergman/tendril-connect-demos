@@ -91,8 +91,8 @@ exports.Resource = class Resource
           else if meta["#{type}_template"][$1]? then meta["#{type}_template"][$1]
           else $0
   
-  express = (T, members, static) ->
-    (if static then T else T::)[k] = v for own k, v of members if members?
+  express = (T, members, stat) ->
+    (if stat then T else T::)[k] = v for own k, v of members if members?
   
   addParams = (T, type, spec="") ->
     meta = metaFor T
