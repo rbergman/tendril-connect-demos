@@ -1,4 +1,4 @@
-{UserLocation, Devices, SmartPlugData} = require "../lib/sdk"
+{UserLocation, Devices, SmartPlugProxy} = require "../lib/sdk"
 
 module.exports = require("./simple_controller")
   caption: "Get Smart Plug Data"
@@ -52,7 +52,7 @@ module.exports = require("./simple_controller")
         trace: "Get smart plug data for #{device.name} (#{device.marketingName})"
         oauth: env.oauth
 
-      new SmartPlugData(device.deviceId, locationId).get(options)
+      new SmartPlugProxy(device.deviceId, locationId).get(options)
         .on("trace", events.trace)
         .on("error", events.fail)
         .on("ready", ready)

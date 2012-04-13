@@ -1,4 +1,4 @@
-{UserLocation, Devices, ThermostatProgram} = require "../lib/sdk"
+{UserLocation, Devices, ThermostatProgramProxy} = require "../lib/sdk"
 
 module.exports = require("./simple_controller")
   caption: "Get Thermostat Program Data"
@@ -52,7 +52,7 @@ module.exports = require("./simple_controller")
         trace: "Get thermostat program data for #{device.name} (#{device.marketingName})"
         oauth: env.oauth
 
-      new ThermostatProgram(device.deviceId, locationId).get(options)
+      new ThermostatProgramProxy(device.deviceId, locationId).get(options)
         .on("trace", events.trace)
         .on("error", events.fail)
         .on("ready", ready)

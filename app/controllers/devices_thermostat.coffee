@@ -1,4 +1,4 @@
-{UserLocation, Devices, ThermostatData} = require "../lib/sdk"
+{UserLocation, Devices, ThermostatProxy} = require "../lib/sdk"
 
 module.exports = require("./simple_controller")
   caption: "Get Thermostat Data"
@@ -52,7 +52,7 @@ module.exports = require("./simple_controller")
         trace: "Get thermostat data for #{device.name} (#{device.marketingName})"
         oauth: env.oauth
 
-      new ThermostatData(device.deviceId, locationId).get(options)
+      new ThermostatProxy(device.deviceId, locationId).get(options)
         .on("trace", events.trace)
         .on("error", events.fail)
         .on("ready", ready)
@@ -66,4 +66,4 @@ module.exports = require("./simple_controller")
         if thermostats.length > 0
           getThermostatData thermostats[0], locationId
         else
-          events.fail new Error "The current user does not appear to have any thermostats to query"
+          events.fail new Error "The current user does not have a thermostat"

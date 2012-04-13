@@ -88,7 +88,8 @@ exports.Resource = class Resource
           alt = $1.replace /\-([a-z])/g, ($0, c) -> c.toUpperCase()
           if value[$1]? then value[$1]
           else if value[alt]? then value[alt]
-          else if meta["#{type}_template"][$1]? then meta["#{type}_template"][$1]
+          else if meta["#{type}_template"]?[$1] then meta["#{type}_template"][$1]
+          else if meta["#{type}_template"]?[alt] then meta["#{type}_template"][alt]
           else $0
   
   express = (T, members, stat) ->
@@ -146,20 +147,23 @@ exports.Resource = class Resource
   
   @schema: (root) ->
     meta = metaFor @
-    meta.types = {}
-    flatten = (obj, ctx="") ->
-      for own k, v of obj
-        path = "#{ctx}/#{k}"
-        if typeof v is "object"
-          if k.charAt(k.length - 1) is "*"
-            path = path.slice 0, path.length - 1
-            meta.types[path] = "array"
+    if root
+      meta.schema = root
+      meta.types = {}
+      flatten = (obj, ctx="") ->
+        for own k, v of obj
+          path = "#{ctx}/#{k}"
+          if typeof v is "object"
+            if k.charAt(k.length - 1) is "*"
+              path = path.slice 0, path.length - 1
+              meta.types[path] = "array"
+            else
+              meta.types[path] = "object"
+            flatten v, path
           else
-            meta.types[path] = "object"
-          flatten v, path
-        else
-          meta.types[path] = v
-    flatten root
+            meta.types[path] = v
+      flatten root
+    meta.schema
   
   @can: (capabilities) ->
     for capability in capabilities.split " " when capability

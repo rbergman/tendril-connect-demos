@@ -1,6 +1,6 @@
-{DeviceAction, DeviceData} = require "./device_action"
+{DeviceActionCommand, DeviceActionResult, DeviceAction, DeviceProxy} = require "./device_action"
 
-exports.SetThermostatDataRequest = class SetThermostatDataRequest extends DeviceAction
+exports.SetThermostatDataCommand = class SetThermostatDataCommand extends DeviceActionCommand
   
   @schema
     "setThermostatDataRequest":
@@ -27,7 +27,25 @@ exports.SetThermostatDataRequest = class SetThermostatDataRequest extends Device
           "temperatureScale": options.temperatureScale or "Fahrenheit"
     super options
 
-exports.GetThermostatDataRequest = class GetThermostatDataRequest extends DeviceAction
+exports.GetThermostatDataCommand = class GetThermostatDataCommand extends DeviceActionCommand
+
+  @schema
+    "getThermostatDataRequest":
+      "@deviceId": "string"
+      "@locationId": "string"
+      "@requestId": "string"
+
+  @create: (options={}) ->
+    @checkOption "deviceId", options
+    @checkOption "locationId", options
+    options.body =
+      "getThermostatDataRequest":
+        "@xmlns": "http://platform.tendrilinc.com/tnop/extension/ems"
+        "@deviceId": options.deviceId
+        "@locationId": options.locationId
+    super options
+
+exports.GetThermostatDataResult = class GetThermostatDataResult extends DeviceActionResult
   
   @schema
     "getThermostatDataRequest":
@@ -40,19 +58,6 @@ exports.GetThermostatDataRequest = class GetThermostatDataRequest extends Device
         "temperatureScale": "string"
         "currentTemp": "float"
         "activeLoadControlEvent": "boolean"
-
-  @create: (options={}) ->
-    @checkOption "deviceId", options
-    @checkOption "locationId", options
-    options.body =
-      "getThermostatDataRequest":
-        "@xmlns": "http://platform.tendrilinc.com/tnop/extension/ems"
-        "@deviceId": options.deviceId
-        "@locationId": options.locationId
-    super options
-
-  constructor: (data, self) ->
-    super data, self
   
   setpoint: ->
     @result().setpoint if @result()
@@ -69,11 +74,17 @@ exports.GetThermostatDataRequest = class GetThermostatDataRequest extends Device
   activeLoadControlEvent: ->
     @result().activeLoadControlEvent if @result()
 
-exports.ThermostatData = class ThermostatData extends DeviceData
+exports.SetThermostatDataAction = class SetThermostatDataAction extends DeviceAction
 
-  @setter SetThermostatDataRequest
-  @getter GetThermostatDataRequest
+  @command SetThermostatDataCommand
+  @result GetThermostatDataResult
 
-  constructor: (deviceId, locationId) ->
-    super deviceId, locationId
-    {DeviceAction, DeviceData} = require "./device_action"
+exports.GetThermostatDataAction = class GetThermostatDataAction extends DeviceAction
+  
+  @command GetThermostatDataCommand
+  @result GetThermostatDataResult
+
+exports.ThermostatProxy = class ThermostatProxy extends DeviceProxy
+
+  @setter SetThermostatDataAction
+  @getter GetThermostatDataAction

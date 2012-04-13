@@ -1,6 +1,6 @@
-{DeviceAction, DeviceData} = require "./device_action"
+{DeviceActionCommand, DeviceActionResult, DeviceAction, DeviceProxy} = require "./device_action"
 
-exports.SetVoltDataRequest = class SetVoltDataRequest extends DeviceAction
+exports.SetVoltDataCommand = class SetVoltDataCommand extends DeviceActionCommand
   
   @schema
     "setVoltDataRequest":
@@ -24,7 +24,25 @@ exports.SetVoltDataRequest = class SetVoltDataRequest extends DeviceAction
           "mode": options.mode
     super options
 
-exports.GetVoltDataRequest = class GetVoltDataRequest extends DeviceAction
+exports.GetVoltDataCommand = class GetVoltDataCommand extends DeviceActionCommand
+
+  @schema
+    "getVoltDataRequest":
+      "@deviceId": "string"
+      "@locationId": "string"
+      "@requestId": "string"
+
+  @create: (options={}) ->
+    @checkOption "deviceId", options
+    @checkOption "locationId", options
+    options.body =
+      "getVoltDataRequest":
+        "@xmlns": "http://platform.tendrilinc.com/tnop/extension/ems"
+        "@deviceId": options.deviceId
+        "@locationId": options.locationId
+    super options
+
+exports.GetVoltDataResult = class GetVoltDataResult extends DeviceActionResult
   
   @schema
     "getVoltDataRequest":
@@ -41,16 +59,6 @@ exports.GetVoltDataRequest = class GetVoltDataRequest extends DeviceAction
           "loadControlEventReturnMode": "string"
           "loadControlEventId": "string"
 
-  @create: (options={}) ->
-    @checkOption "deviceId", options
-    @checkOption "locationId", options
-    options.body =
-      "getVoltDataRequest":
-        "@xmlns": "http://platform.tendrilinc.com/tnop/extension/ems"
-        "@deviceId": options.deviceId
-        "@locationId": options.locationId
-    super options
-
   constructor: (data, self) ->
     super data, self
   
@@ -60,10 +68,17 @@ exports.GetVoltDataRequest = class GetVoltDataRequest extends DeviceAction
   loadControlEvent: ->
     @result().loadControlEvent if @result()
 
-exports.SmartPlugData = class SmartPlugData extends DeviceData
+exports.SetVoltDataAction = class SetVoltDataAction extends DeviceAction
 
-  @setter SetVoltDataRequest
-  @getter GetVoltDataRequest
+  @command SetVoltDataCommand
+  @result GetVoltDataResult
 
-  constructor: (deviceId, locationId) ->
-    super deviceId, locationId
+exports.GetVoltDataAction = class GetVoltDataAction extends DeviceAction
+
+  @command GetVoltDataCommand
+  @result GetVoltDataResult
+
+exports.SmartPlugProxy = class SmartPlugProxy extends DeviceProxy
+
+  @setter SetVoltDataAction
+  @getter GetVoltDataAction

@@ -1,6 +1,6 @@
-{DeviceAction, DeviceData} = require "./device_action"
+{DeviceActionCommand, DeviceActionResult, DeviceAction, DeviceProxy} = require "./device_action"
 
-exports.SetThermostatProgramRequest = class SetThermostatProgramRequest extends DeviceAction
+exports.SetThermostatProgramCommand = class SetThermostatProgramCommand extends DeviceActionCommand
 
   @schema
     "setThermostatProgramRequest":
@@ -31,7 +31,25 @@ exports.SetThermostatProgramRequest = class SetThermostatProgramRequest extends 
         "data": options.program
     super options
 
-exports.GetThermostatProgramRequest = class GetThermostatProgramRequest extends DeviceAction
+exports.GetThermostatProgramCommand = class GetThermostatProgramCommand extends DeviceActionCommand
+
+  @schema
+    "getThermostatProgramRequest":
+      "@deviceId": "string"
+      "@locationId": "string"
+      "@requestId": "string"
+
+  @create: (options={}) ->
+    @checkOption "deviceId", options
+    @checkOption "locationId", options
+    options.body =
+      "getThermostatProgramRequest":
+        "@xmlns": "http://platform.tendrilinc.com/tnop/extension/ems"
+        "@deviceId": options.deviceId
+        "@locationId": options.locationId
+    super options
+
+exports.GetThermostatProgramResult = class GetThermostatProgramResult extends DeviceActionResult
 
   @schema
     "getThermostatProgramRequest":
@@ -49,26 +67,20 @@ exports.GetThermostatProgramRequest = class GetThermostatProgramRequest extends 
               "heatingSetPoint": "float"
               "coolingSetPoint": "float"
 
-  @create: (options={}) ->
-    @checkOption "deviceId", options
-    @checkOption "locationId", options
-    options.body =
-      "getThermostatProgramRequest":
-        "@xmlns": "http://platform.tendrilinc.com/tnop/extension/ems"
-        "@deviceId": options.deviceId
-        "@locationId": options.locationId
-    super options
-
-  constructor: (data, self) ->
-    super data, self
-
   program: ->
     @result().thermostatProgram if @result()
 
-exports.ThermostatProgram = class ThermostatProgram extends DeviceData
+exports.SetThermostatProgramAction = class SetThermostatProgramAction extends DeviceAction
 
-  @setter SetThermostatProgramRequest
-  @getter GetThermostatProgramRequest
+  @command SetThermostatProgramCommand
+  @result GetThermostatProgramResult
 
-  constructor: (deviceId, locationId) ->
-    super deviceId, locationId
+exports.GetThermostatProgramAction = class GetThermostatProgramAction extends DeviceAction
+
+  @command GetThermostatProgramCommand
+  @result GetThermostatProgramResult
+
+exports.ThermostatProgramProxy = class ThermostatProgramProxy extends DeviceProxy
+
+  @setter SetThermostatProgramAction
+  @getter GetThermostatProgramAction
