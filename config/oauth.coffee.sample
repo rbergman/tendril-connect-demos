@@ -4,7 +4,8 @@ module.exports =
     url: "http://localhost:3001"
     id: "your oauth id"
     secret:"your oauth secret"
-    scope: "account user_information user_profile location consumption pricing device comparisons greenbutton offline_access"
+    scope: "account meter device"
+    #scope: "account user_information user_profile location consumption pricing device comparisons greenbutton offline_access"
     threshold: 60
   provider:
     url: "https://dev.tendrilinc.com"
