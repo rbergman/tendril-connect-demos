@@ -1,7 +1,7 @@
 {NeighborsConsumption} = require "../lib/sdk"
 
 module.exports = require("./simple_controller")
-  caption: "Cost & Consumption Comparison: My Neighbors"
+  caption: "Cost & Consumption: My Neighbors"
   apis: [{name: "Comparisons: Cost & Consumption Comparisons, to My Neighbors", path: "cost_and_consumption_comparison_myneighbors"}]
 
   action: (env, events) ->

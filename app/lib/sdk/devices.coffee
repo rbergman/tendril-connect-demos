@@ -3,16 +3,16 @@
 module.exports =
 
   Devices: class Devices extends Resource
-  
+
     @path "/user/{user-id}/account/{account-id}/location/{location-id}/network/default-network/device",
       "user-id": "current-user"
       "account-id": "default-account"
       "location-id": "default-location"
-  
+
     @matrix "include-extended-properties"
 
     @can "load"
-    
+
     @schema
       "devices":
         "device*":
@@ -26,7 +26,7 @@ module.exports =
             "namespace": "string"
             "name": "string"
             "value": "string"
-    
+
     devices: ->
       devices = @data.devices?.device or []
       for device in devices when device.extendedProperty
@@ -35,15 +35,16 @@ module.exports =
           bkey = (b.namespace or "0") + b.name
           (bkey < akey) - (akey < bkey)
       devices
-  
+
   DeviceConsumption: class DeviceConsumption extends Resource
-    
+
     @path "/user/{user-id}/account/{account-id}/location/{location-id}/device/{device-id}/consumption/{resolution}",
       "user-id": "current-user"
       "account-id": "default-account"
       "location-id": "default-location"
       "resolution": "MONTHLY"
-    
+
     @matrix "from to limit-to-latest include-extended-properties"
-    
+
     @can "load"
+

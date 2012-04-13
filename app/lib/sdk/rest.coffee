@@ -18,6 +18,7 @@ request = (method, url, accessToken, body, label) ->
   headers =
     "Accept": "application/xml"
     "Access_Token": accessToken
+  headers["Content-Type"] = "application/xml" if body
   options = url.toOptions method: method, headers: headers
   xreq = new RequestTrace method, url, headers, body
   start = Date.now()
@@ -30,9 +31,6 @@ request = (method, url, accessToken, body, label) ->
       events.emit "receive", xres, label
       events.emit "trace", xreq, xres, label, Date.now() - start
       if 200 <= code < 300
-        # events.emit "ok", xres if code is 200
-        # events.emit "created", xres if code is 201
-        # events.emit "no-content", xres if code is 204
         events.emit "success", xres
       else if 300 <= code < 400
         events.emit "redirect", xres

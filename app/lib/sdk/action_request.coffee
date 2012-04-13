@@ -2,10 +2,13 @@
 {EventEmitter} = require "./events"
 
 class ActionResource extends Resource
+  
+  constructor: (data, self) ->
+    super data, self
 
   root: ->
-    root = Object.keys(@constructor.schema())[0]
-    @data[root] if @data
+    @_root or @_root = Object.keys(@constructor.schema())[0]
+    @data[@_root] if @data
 
   requestId: ->
     @root()["@requestId"] if @root()
@@ -71,7 +74,7 @@ exports.Action = class Action extends Meta
               setTimeout doAttempt, schedule[attempt]
             else
               events.emit "error", new Error "Maximum number of retries exceeded while polling for action result"
-        label = "Poll for device action result (#{attempt + 1})"
+        label = "Poll for action result (#{attempt + 1})"
         result.load(requestId: cmodel.requestId(), oauth: options.oauth, trace: label)
           .on("loaded", loaded)
           .forward(events, "error send receive trace")

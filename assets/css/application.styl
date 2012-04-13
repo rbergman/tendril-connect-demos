@@ -24,7 +24,7 @@
 .home
 
   .thumbnail
-  
+
     h3
       text-align center
       line-height 100px
@@ -32,14 +32,14 @@
       font-size 36px
       text-shadow 0 1px #fff
       margin-bottom 10px
-      
+
       a
         display inline-block
         width 100%
-        
+
         &:hover
           text-decoration none
-      
+
     p
       margin 0
 
@@ -56,10 +56,10 @@
     font-size 14px
 
     .line
-    
+
       &.weak
         color #999
-  
+
       &.strong
         font-weight bold
 
@@ -71,7 +71,7 @@ table.table
     background #f0f0f0
     color #999
     text-shadow 0 1px #fff
-  
+
     &.jumbotron
       font-size 22px
       line-height 44px
@@ -96,7 +96,7 @@ table.table
 
 .api-guide
   font-size 16px
-  
+
   li
     margin 10px 0
 
@@ -114,17 +114,31 @@ table.table
   display none
 
 .alert
+
+  p
+    margin 0
+
   a
     color #C09853
 
-.alert.alert-success
-  a
-    color #468847
+  &.alert-success
+    a
+      color #468847
 
-.alert.alert-info
-  a
-    color #3A87AD
+  &.alert-info
+    a
+      color #3A87AD
 
-.alert.alert-error
-  a
-    color #B94A48
+  &.alert-error
+    a
+      color #B94A48
+
+  &.alert-no-control
+    padding-right 14px
+
+    p
+      margin-bottom 10px
+
+    table
+      margin-bottom 5px
+

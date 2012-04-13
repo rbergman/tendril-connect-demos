@@ -2,7 +2,12 @@
 
 exports.BuildingModelSimulationCommand = class BuildingModelSimulationCommand extends ActionCommand
   
-  @createPath = "/user/{user-id}/account/{account-id}/location/{location-id}/buildingmodel-action"
+  @createPath "/user/{user-id}/account/{account-id}/location/{location-id}/buildingmodel-action",
+    "user-id": "current-user"
+    "account-id": "default-account"
+    "location-id": "default-location"
+
+  @matrix "from to resolution"
   
   @schema
     "buildingModelSimulationRequest":

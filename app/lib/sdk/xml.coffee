@@ -1,13 +1,16 @@
 {SaxParser} = require "libxmljs"
 
 exports.XML =
-  
-  parse: (xml, types={}) ->
+
+  parse: (xml, types={}, doNamespaces=true) ->
 
     dom = {}
     stack = []
     path = []
     buffer = ""
+
+    getQName = (name, prefix) ->
+      if doNamespaces then "#{if prefix then prefix + ':' else ''}#{name}" else name
 
     parser = new SaxParser
 
@@ -20,11 +23,11 @@ exports.XML =
       comment: (comment) -> # skip
 
       startElementNS: (name, attrs, prefix, uri, namespaces) ->
-        qname = "#{if prefix then prefix + ':' else ''}#{name}"
+        qname = getQName name, prefix
         path.push qname
         el = {}
         el["@#{if attr[1] then attr[1] + ':' else ''}#{attr[0]}"] = attr[3] for attr in attrs
-        el["@xmlns#{if ns[0] then ':' + ns[0] else ''}"] = ns[1] for ns in namespaces
+        el["@xmlns#{if ns[0] then ':' + ns[0] else ''}"] = ns[1] for ns in namespaces if doNamespaces
         parent = stack[0]
         other = parent[qname]
         if other
@@ -36,7 +39,7 @@ exports.XML =
         stack.unshift el
 
       endElementNS: (name, prefix, uri) ->
-        qname = "#{if prefix then prefix + ':' else ''}#{name}"
+        qname = getQName name, prefix
         buffer = buffer.replace(/^\s*|\s*$/g, "")
         el = stack[0]
         isLeaf = Object.keys(el).length is 0
@@ -85,7 +88,7 @@ exports.XML =
 
     array = (name, elements) ->
       item name, el for el in elements
-    
+
     isAttr = (name) -> name.charAt(0) is "@"
 
     element = (name, el) ->
@@ -162,3 +165,4 @@ exports.XML =
 # console.log JSON.stringify(p(s(el, null, 2)), null, 2)
 # console.log s(el, null, 2)
 # console.log s(p(s(el, null, 2)), null, 2)
+#

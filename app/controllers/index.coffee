@@ -1,4 +1,4 @@
-files = ['home', 'help', 'user', 'metering', 'pricing', 'devices', 'comparisons', 'greenbutton']
+files = ['home', 'help', 'user', 'metering', 'pricing', 'devices', 'building', 'greenbutton']
 for file in files
   do (file) ->
     controller = require "./#{file}"
@@ -14,3 +14,4 @@ for file in files
               res.redirect "/"
           else
             action req, res
+

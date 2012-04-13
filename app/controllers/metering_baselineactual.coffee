@@ -1,11 +1,11 @@
 {BaselineActualConsumption} = require "../lib/sdk"
 
 module.exports = require("./simple_controller")
-  caption: "Cost & Consumption Comparison: Baseline and Actual"
+  caption: "Cost & Consumption: Baseline and Actual"
   apis: [{name: "Comparisons: Cost & Consumption Comparisons, Baseline and Actual", path: "cost_and_consumption_comparison_baselineactual"}]
 
   action: (env, events) ->
-    
+
     loaded = (model) ->
       env.locals.model = model
       events.done()

@@ -10,23 +10,23 @@ module.exports = require("./simple_controller")
   ]
 
   action: (env, events) ->
-    
+
     getLocation = (next) ->
-      
+
       loaded = (model) ->
         next model.id()
 
       options =
         trace: "Get user's default location"
         oauth: env.oauth
-      
+
       UserLocation.load(options)
         .on("trace", events.trace)
         .on("error", events.fail)
         .on("loaded", loaded)
 
     getDevices = (next) ->
-      
+
       loaded = (model) ->
         next model.devices()
 
@@ -40,7 +40,7 @@ module.exports = require("./simple_controller")
         .on("loaded", loaded)
 
     getSmartPlugData = (device, locationId) ->
-      
+
       env.locals.device = device
 
       ready = (model, elapsed) ->
@@ -67,3 +67,4 @@ module.exports = require("./simple_controller")
           getSmartPlugData plugs[0], locationId
         else
           events.fail new Error "The current user does not appear to have any smart plugs to query"
+

@@ -26,12 +26,10 @@ exports.Resource = class Resource
       req = rest[method].apply(rest, args).forward(events)
     [events, req, url]
   
-  parse = (res, types) ->
-  
   emitNewResource = (events, event, T, url) ->
     (res) ->
       if res.body and res.headers["Content-Type"]?.indexOf("application/xml") is 0
-        data = XML.parse res.body, metaFor(T).types
+        data = XML.parse res.body, metaFor(T).types, false
         events.emit event, new T(data, res.headers.location or url.toString())
       else
         events.emit "error", new Error("Expected XML body in response:\n#{res.toString()}")
