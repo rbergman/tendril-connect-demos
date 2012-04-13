@@ -86,8 +86,8 @@ exports.Resource = class Resource
           alt = $1.replace /\-([a-z])/g, ($0, c) -> c.toUpperCase()
           if value[$1]? then value[$1]
           else if value[alt]? then value[alt]
-          else if meta["#{type}_template"]?[$1] then meta["#{type}_template"][$1]
-          else if meta["#{type}_template"]?[alt] then meta["#{type}_template"][alt]
+          else if meta["#{type}_template"]?[$1]? then meta["#{type}_template"][$1]
+          else if meta["#{type}_template"]?[alt]? then meta["#{type}_template"][alt]
           else $0
   
   express = (T, members, stat) ->
