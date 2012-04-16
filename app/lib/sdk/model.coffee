@@ -1,3 +1,6 @@
+# @todo this is old and needs to be removed; am just keeping it
+#       around for now until I can decouple it from the url class
+
 {EventEmitter} = require "events"
 {XML} = require "./xml"
 
