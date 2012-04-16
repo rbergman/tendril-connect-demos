@@ -12,5 +12,4 @@ module.exports =
     authorize: "/oauth/authorize"
     accessToken: "/oauth/access_token"
     logout: "/oauth/logout"
-    # @todo
-    # route: "sandbox"
+    route: "sandbox"

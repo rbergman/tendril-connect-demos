@@ -1,17 +1,17 @@
-{trace, consumer, provider} = require '../../config/oauth'
+module.exports = (app, events, config) ->
 
-module.exports = (app, events) ->
+  {trace, consumer, provider} = config
 
   # ----------------------------------------------------------------------------------------------------
   # helpers
   # ----------------------------------------------------------------------------------------------------
 
   routes = {}
-  routes[route] = "/session/#{route}" for route in ['connect', 'callback', 'disconnect', 'disconnected']
+  routes[route] = "/session/#{route}" for route in ["connect", "callback", "disconnect", "disconnected"]
 
   store = (req, key, value) ->
     ns = if req.session.oauth then req.session.oauth else req.session.oauth = {}
-    if typeof key is 'function'
+    if typeof key is "function"
       key.call ns
     else
       if value? then ns[key] = value else if value is null then delete ns[key]
@@ -25,18 +25,20 @@ module.exports = (app, events) ->
 
   get = (reason, url, done, fail) ->
     parts = url.parse()
-    secure = parts.protocol is 'https:'
-    transport = if secure then require 'https' else require 'http'
+    secure = parts.protocol is "https:"
+    transport = if secure then require "https" else require "http"
     options =
       host: parts.host
       port: parts.port or (if secure then 443 else 80)
       path: parts.pathname + parts.search
-      headers: 'Accept': 'application/json'
+      headers:
+        "Accept": "application/json"
+        "X-Route": provider.route
     next = (ores) ->
-      body = ''
+      body = ""
       json = null
-      ores.on 'data', (chunk) -> body = body + chunk
-      ores.on 'end', ->
+      ores.on "data", (chunk) -> body = body + chunk
+      ores.on "end", ->
         try
           json = JSON.parse(body) if body
           if ores.statusCode is 200
@@ -49,7 +51,7 @@ module.exports = (app, events) ->
         catch ex
           fail ex
     console.log "OAuth2:#{reason} -> GET #{url.toString()}" if trace
-    transport.get(options, next).on('error', fail)
+    transport.get(options, next).on("error", fail)
   
   redirect = (reason, res, url) ->
     console.log "OAuth2:#{reason} -> REDIRECT #{url.toString()}" if trace
@@ -57,31 +59,31 @@ module.exports = (app, events) ->
 
   class Url
     constructor: (@base, @path, @params) ->
-    parse: -> require('url').parse @toString()
-    toString: -> "#{@base}#{@path}?#{(k + '=' + encodeURIComponent(v) for own k, v of @params).join '&'}"
+    parse: -> require("url").parse @toString()
+    toString: -> "#{@base}#{@path}?#{(k + "=" + encodeURIComponent(v) for own k, v of @params).join "&"}"
 
   # ----------------------------------------------------------------------------------------------------
   # routes
   # ----------------------------------------------------------------------------------------------------
 
   app.get routes.connect, (req, res) ->
-    store req, 'host', provider.url
-    hash = require('crypto').createHash
-    store req, 'state', hash('md5').update(Date.now().toString()).digest('hex')
+    store req, "host", provider.url
+    hash = require("crypto").createHash
+    store req, "state", hash("md5").update(Date.now().toString()).digest("hex")
     url = new Url provider.url, provider.authorize,
-      response_type: 'code'
+      response_type: "code"
       client_id: consumer.id
       redirect_uri: "#{consumer.url}#{routes.callback}"
       scope: consumer.scope
-      state: store req, 'state'
+      state: store req, "state"
     redirect "CONNECT", res, url
 
   app.get routes.callback, (req, res) ->
     code = req.query.code
     if code
-      store req, 'code', code
+      store req, "code", code
       url = new Url provider.url, provider.accessToken,
-        grant_type: 'authorization_code'
+        grant_type: "authorization_code"
         code: code
         redirect_uri: "#{consumer.url}#{routes.callback}"
         client_id: consumer.id
@@ -93,7 +95,7 @@ module.exports = (app, events) ->
         events.error "Failed to connect to OAuth provider: #{err}", req, res
       get "CONNECT", url, done, fail
     else if req.query.error
-      store req, 'state', null
+      store req, "state", null
       events.denied req.query.error, req, res
     else
       events.error "Invalid callback request: OAuth2 code not specified", req, res
@@ -116,7 +118,7 @@ module.exports = (app, events) ->
     store req, ->
       if @authenticated and -(Date.now() - @expires_time) < (consumer.threshold * 1000)
         url = new Url provider.url, provider.accessToken,
-          grant_type: 'refresh_token',
+          grant_type: "refresh_token",
           refresh_token: @refresh_token
           scope: consumer.scope
         done = (json) ->
