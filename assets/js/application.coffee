@@ -39,7 +39,6 @@ do ->
       done = (html) ->
         $deferred.hide().html(html).fadeIn(100)
         initTracePanels()
-        # clearInterval timer
       fail = (xhr, status, error) ->
         done "<div class='alert alert-error'>Failed to load content#{if error then ': ' + error else ''}</div>"
       $.get(Tendril.deferred).done(done).fail(fail)
