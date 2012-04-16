@@ -8,6 +8,8 @@ module.exports = (app, events, config) ->
 
   routes = {}
   routes[route] = "/session/#{route}" for route in ["connect", "callback", "disconnect", "disconnected"]
+  
+  consumerUrl = -> consumer.url.replace "{port}", app.address().port
 
   store = (req, key, value) ->
     ns = if req.session.oauth then req.session.oauth else req.session.oauth = {}
@@ -73,7 +75,7 @@ module.exports = (app, events, config) ->
     url = new Url provider.url, provider.authorize,
       response_type: "code"
       client_id: consumer.id
-      redirect_uri: "#{consumer.url}#{routes.callback}"
+      redirect_uri: "#{consumerUrl()}#{routes.callback}"
       scope: consumer.scope
       state: store req, "state"
     redirect "CONNECT", res, url
@@ -85,7 +87,7 @@ module.exports = (app, events, config) ->
       url = new Url provider.url, provider.accessToken,
         grant_type: "authorization_code"
         code: code
-        redirect_uri: "#{consumer.url}#{routes.callback}"
+        redirect_uri: "#{consumerUrl()}#{routes.callback}"
         client_id: consumer.id
         client_secret: consumer.secret
       done = (json) ->
@@ -103,7 +105,7 @@ module.exports = (app, events, config) ->
   app.get routes.disconnect, (req, res) ->
     req.session.destroy()
     # @todo get return address from server config
-    url = new Url provider.url, provider.logout, redirect_uri: "#{consumer.url}#{routes.disconnected}"
+    url = new Url provider.url, provider.logout, redirect_uri: "#{consumerUrl()}#{routes.disconnected}"
     redirect "DISCONNECT", res, url
 
   app.get routes.disconnected, (req, res) ->

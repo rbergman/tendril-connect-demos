@@ -14,14 +14,18 @@ Then, with [Node.js](http://nodejs.org) v0.6.x:
 	npm install -g coffee # if not already installed
 	npm install
 
-At [Tendril's developer site](https://dev.tendrilinc.com), create an app to acquire an OAuth2 app id and key.  Then:
+Next:
 
-	cp config/oauth.coffee.sample config/oauth.coffee
+	cp config/env.coffee.sample config/env.coffee
 
-Edit oauth.coffee to add your app id and secret.  Then, you should be ready to start the server like so:
+Edit env.coffee to configure a custom session secret for your app.  This can be any secret pass phrase you deem appropriate.
 
-	./server
+Then at [Tendril's developer site](https://dev.tendrilinc.com), create an app to acquire an OAuth2 app id and key.  Further edit oauth.coffee to add your app id and secret.  At this point you should be ready to start the server like so:
+
+	./server [server port]
 
 Or:
 
-	coffee ./app/server.coffee
+	coffee ./app/server.coffee [server port]
+
+The server will start on port 3001, unless you optionally specify your own port in the commands above.

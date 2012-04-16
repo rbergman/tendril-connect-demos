@@ -1,8 +1,8 @@
-# expressjs
-
 expressjs = require "express"
 assets = require "connect-assets"
+env = require "../config/env"
 oauth =
+  config: env.oauth
   middleware: require "./middleware/oauth"
   events: require("./controllers/oauth").events
 
@@ -15,8 +15,8 @@ app.configure ->
   app.use expressjs.bodyParser()
   app.use expressjs.methodOverride()
   app.use expressjs.cookieParser()
-  app.use expressjs.session secret: "honey badger!"
-  app.use oauth.middleware(app, oauth.events)
+  app.use expressjs.session secret: env.app.secret
+  app.use oauth.middleware app, oauth.events, oauth.config
   app.use app.router
   app.use assets()
   app.use expressjs.static "#{cwd}/public"
@@ -33,18 +33,3 @@ require("../config/routes")(app)
 
 app.listen (process.argv?.length and parseInt process.argv[2]) or 3001
 console.log "Listening on port #{app.address().port} in #{app.settings.env} mode"
-
-# nowjs
-#
-#nowjs = require "now"
-#
-# everyone = nowjs.initialize app
-# 
-# nowjs.on "connect", ->
-#   console.log "Joined: #{@now.name}"
-# 
-# nowjs.on "disconnect", ->
-#   console.log "Left: #{@now.name}"
-# 
-# everyone.now.distributeMessage = (message) ->
-#   everyone.now.receiveMessage @now.name, message
