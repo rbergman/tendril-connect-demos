@@ -2,7 +2,7 @@
   .trace-entry
     div(class='alert '+(statusClass(entry.response)))
       strong: a(href='#trace_'+ei, data-toggle='trace-panel') #{entry.label}
-      span.elapsed [#{entry.elapsed}ms]
+      span.elapsed #{entry.elapsed}ms
     div(id='trace_'+ei, class='trace-panel'+(ei!=trace.length-1?' hidden':''))
       p.lead &rarr; Request
       pre
