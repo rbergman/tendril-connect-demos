@@ -1,6 +1,6 @@
 # About
 
-This is sample [Node.js](http://nodejs.org) application for demoing interactions with the Tendril Connect REST APIs, while exploring development of a Node.js client SDK for the same APIs.  It is a work in progress!
+This is sample [Node.js](http://nodejs.org) application for demoing interactions with the [Tendril Connect HTTP APIs](https://dev.tendrilinc.com/docs), while exploring development of a Node.js client SDK for the same APIs.  It is a work in progress!
 
 # Installation
 
