@@ -1,6 +1,6 @@
 {Resource} = require "./resource"
 {EventEmitter} = require "./events"
-{ActionCommand, ActionResult, Action, ActionProxy} = require "./action_request"
+{ActionCommand, ActionResult, Action, ActionProxy} = require "./request_action"
 
 exports.DeviceActionCommand = class DeviceActionCommand extends ActionCommand
 

@@ -1,4 +1,4 @@
-{ActionCommand, ActionResult, Action} = require "./action_request"
+{ActionCommand, ActionResult, Action} = require "./request_action"
 
 exports.BuildingModelSimulationCommand = class BuildingModelSimulationCommand extends ActionCommand
   
