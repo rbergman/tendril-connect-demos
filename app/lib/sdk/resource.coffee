@@ -53,14 +53,14 @@ exports.Resource = class Resource
     save:
       canUpdate: -> true
       update: (options={}) ->
-        [events, req, url] = request @construT, "put", "path", options
+        [events, req, url] = request @constructor, "put", "path", options
         req.on("success", -> events.emit "saved") if req
         events
 
     destroy:
       canDestroy: -> true
       destroy: (options={}) ->
-        [events, req, url] = request @construT, "del", "path", options
+        [events, req, url] = request @constructor, "del", "path", options
         req.on("success", -> events.emit "destroyed") if req
         events
 
