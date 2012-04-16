@@ -1,3 +1,7 @@
+# About
+
+This is sample [Node.js](http://nodejs.org) application for demoing interactions with the Tendril Connect REST APIs, while exploring development of a Node.js client SDK for the same APIs.  It is a work in progress!
+
 # Installation
 
 First clone the repo:
@@ -21,7 +25,3 @@ Edit oauth.coffee to add your app id and secret.  Then, you should be ready to s
 Or:
 
 	coffee ./app/server.coffee
-
-# About
-
-This is sample [Node.js](http://nodejs.org) application for demoing interactions with the Tendril Connect REST APIs, while exploring development of a Node.js client SDK for the same APIs.  It is very much an early work in progress!
