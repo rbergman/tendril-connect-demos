@@ -1,4 +1,4 @@
-files = ['home', 'help', 'user', 'metering', 'pricing', 'devices', 'building', 'greenbutton']
+files = ['home', 'about', 'user', 'metering', 'pricing', 'devices', 'building', 'greenbutton']
 for file in files
   do (file) ->
     controller = require "./#{file}"
