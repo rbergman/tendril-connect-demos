@@ -4,7 +4,7 @@ module.exports =
     url: "http://localhost:3001"
     id: "your oauth id"
     secret:"your oauth secret"
-    scope: "account meter device"
+    scope: "account consumption device"
     #scope: "account user_information user_profile location consumption pricing device comparisons greenbutton offline_access"
     threshold: 60
   provider:
