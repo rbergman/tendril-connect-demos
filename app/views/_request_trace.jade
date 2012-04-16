@@ -1,8 +1,9 @@
 - for entry, ei in trace
   .trace-entry
     div(class='alert '+(statusClass(entry.response)))
-      strong: a(href='#trace_'+ei, data-toggle='trace-panel') #{entry.label} [#{entry.elapsed}ms]
-    div(id='trace_'+ei, class='trace-panel'+(trace.length>1?' hidden':''))
+      strong: a(href='#trace_'+ei, data-toggle='trace-panel') #{entry.label}
+      span.elapsed [#{entry.elapsed}ms]
+    div(id='trace_'+ei, class='trace-panel'+(ei!=trace.length-1?' hidden':''))
       p.lead &rarr; Request
       pre
         - var req = entry.request
@@ -23,4 +24,3 @@
         - if (res.body)
           .line &nbsp;
           .body= res.formatBody()
-      p &nbsp;

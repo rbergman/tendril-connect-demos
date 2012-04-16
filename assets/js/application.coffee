@@ -29,7 +29,7 @@ do ->
 
     $("a[data-toggle='trace-panel']").click (e) ->
       e.preventDefault()
-      $($(e.target).attr("href")).toggleClass("hidden")
+      $($(e.target).attr("href")).slideToggle("hidden")
 
   window.Tendril = 
 
