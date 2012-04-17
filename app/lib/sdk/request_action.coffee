@@ -58,8 +58,7 @@ exports.Action = class Action extends Meta
 
   invoke: (options) ->
     start = Date.now()
-    events = new EventEmitter
-    events.names = "ready"
+    events = new EventEmitter "ready"
     schedule = @constructor.schedule()
     command = @constructor.command()
     result = @constructor.result()
