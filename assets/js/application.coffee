@@ -29,19 +29,28 @@ do ->
 
     $("a[data-toggle='trace-panel']").click (e) ->
       e.preventDefault()
-      $($(e.target).attr("href")).slideToggle("hidden")
+      $($(this).attr("href")).slideToggle("hidden")
+
+  initDeviceActions = ->
+    
+    $("a[data-device-cmd]").live "click", (e) ->
+      $btn = $(this)
+      cmd = $btn.attr("data-device-cmd")
+      [type, id, action] = cmd.split "-"
+      Tendril.load("/devices/#{type}?ns=#{type}-#{id}-#{action}&id=#{id}&action=#{action}", "#{type}-#{id}-#{action}_content")
 
   window.Tendril = 
 
-    load: (url) ->
-      $deferred = $("#deferred-content")
-      $("#spinner").delay(400).fadeIn(100)
+    load: (url, elId) ->
+      $deferred = $("#" + elId)
+      $deferred.html("<div class='spinner hidden'><img src='/img/spinner.gif'><p/>Reticulating splines...</div>")
+      $deferred.find(".spinner").delay(400).fadeIn(100)
       done = (html) ->
         $deferred.hide().html(html).fadeIn(100)
         initTracePanels()
       fail = (xhr, status, error) ->
         done "<div class='alert alert-error'>Failed to load content#{if error then ': ' + error else ''}</div>"
-      $.get(Tendril.deferred).done(done).fail(fail)
+      $.get(url).done(done).fail(fail)
   
   # dom ready
 
@@ -49,3 +58,4 @@ do ->
   
     initScroll()
     initTracePanels()
+    initDeviceActions()

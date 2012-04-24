@@ -1,7 +1,7 @@
 {UserLocation, Devices, ThermostatProxy} = require "../lib/sdk"
 
 module.exports = require("./simple_controller")
-  caption: "Get Thermostat Data"
+  caption: "Thermostat Status"
   apis: [
     {name: "Users: User Location", path: "user_location"}
     {name: "Devices: List User's Devices", path: "list_users_devices"}
@@ -28,7 +28,7 @@ module.exports = require("./simple_controller")
     getDevices = (next) ->
       
       loaded = (model) ->
-        next model.devices()
+        next model
 
       options =
         trace: "List user's devices"
@@ -61,9 +61,14 @@ module.exports = require("./simple_controller")
     getLocation (locationId) ->
       # next, get a list of the user's devices
       getDevices (devices) ->
-        # then, to make this easy, pick the first thermostat we can find
-        thermostats = (device for device in devices when device.category is "Thermostat")
-        if thermostats.length > 0
-          getThermostatData thermostats[0], locationId
+        deviceId = env.request.query.id
+        if deviceId
+          # if a deviceId was specified, choose that if it exists
+          thermostat = devices.deviceById deviceId
         else
-          events.fail new Error "The current user does not have a thermostat"
+          # else if none was specified, go with the first of its type
+          thermostat = devices.firstDeviceByCategory "Thermostat"
+        if not thermostat
+          events.fail new Error "No usable thermostat found"
+        else
+          getThermostatData thermostat, locationId

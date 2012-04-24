@@ -17,9 +17,9 @@ module.exports = require("./simple_controller")
     options =
       trace: "Run building model simulation"
       oauth: env.oauth
-      from: "2012-01-24T00:00:00-0000"
-      to: "2012-01-31T00:00:00-0000"
-      resolution: "HOUR"
+      from: "2011-01-01T00:00:00-0000"
+      to: "2011-12-31T00:00:00-0000"
+      resolution: "YEAR"
 
     new BuildingModelSimulation().invoke(options)
       .on("trace", events.trace)

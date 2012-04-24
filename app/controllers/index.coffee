@@ -14,4 +14,3 @@ for file in files
               res.redirect "/"
           else
             action req, res
-

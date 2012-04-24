@@ -1,9 +1,12 @@
+- if (locals.elapsed)
+  .alert.alert-info #{elapsed}ms effective response time
 - for entry, ei in trace
+  - var traceId = "trace_" + ei + (locals.ns ? "_" + locals.ns : "")
   .trace-entry
     div(class='alert '+(statusClass(entry.response)))
-      strong: a(href='#trace_'+ei, data-toggle='trace-panel') #{entry.label}
+      strong: a(href='#'+traceId, data-toggle='trace-panel') #{entry.label}
       span.elapsed #{entry.elapsed}ms
-    div(id='trace_'+ei, class='trace-panel'+(ei!=trace.length-1?' hidden':''))
+    div(id=traceId, class='trace-panel'+(ei!=trace.length-1?' hidden':''))
       p.lead &rarr; Request
       pre
         - var req = entry.request

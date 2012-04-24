@@ -35,6 +35,17 @@ module.exports =
           bkey = (b.namespace or "0") + b.name
           (bkey < akey) - (akey < bkey)
       devices
+    
+    deviceById: (id) ->
+      one = (device for device in @devices() when device.deviceId is id)
+      if one.length is 1 then one[0] else undefined
+    
+    devicesByCategory: (category) ->
+      device for device in @devices() when device.category is category
+    
+    firstDeviceByCategory: (category) ->
+      some = @devicesByCategory category
+      if some.length > 0 then some[0] else undefined
 
   DeviceConsumption: class DeviceConsumption extends Resource
 

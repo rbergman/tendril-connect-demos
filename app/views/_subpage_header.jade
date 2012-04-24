@@ -4,5 +4,6 @@ p.lead= section.detail
 .subnav
   ul.nav.nav-pills
     - for sp in subpages
-      li(class=activeClass(sp.name, subpage))
-        a(href='/'+section.name+'/'+sp.name)= sp.title
+      - if (!sp.hidden)
+        li(class=activeClass(sp.name, subpage))
+          a(href='/'+section.name+'/'+sp.name)= sp.title

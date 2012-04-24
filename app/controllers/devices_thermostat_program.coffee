@@ -1,7 +1,7 @@
 {UserLocation, Devices, ThermostatProgramProxy} = require "../lib/sdk"
 
 module.exports = require("./simple_controller")
-  caption: "Get Thermostat Program Data"
+  caption: "Thermostat Program"
   apis: [
     {name: "Users: User Location", path: "user_location"}
     {name: "Devices: List User's Devices", path: "list_users_devices"}

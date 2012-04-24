@@ -22,6 +22,7 @@ module.exports = (options) ->
         section:
           name: options.name
           title: options.title
+        ns: req.query.ns
       locals[k] = v for own k, v of helpersFor(file)
       if req.xhr
         _res = render: -> res.partial "subpage_layout", locals

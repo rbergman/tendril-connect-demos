@@ -86,6 +86,7 @@ table.table
   td.label-cell
     font-weight normal
     text-align right
+    white-space nowrap
 
   td.value-cell
     font-weight bold
@@ -104,11 +105,9 @@ table.table
   small
     color #666
 
-#deferred-content
-
-  #spinner
-    text-align center
-    padding 40px
+.spinner
+  text-align center
+  padding 40px
 
 .hidden
   display none
@@ -160,3 +159,19 @@ table.table
     
     pre
       background #fff
+
+.well.controls
+  padding 10px
+  margin-bottom 10px
+
+// hacky; not needed in bs2.0.2
+.modal
+  overflow hidden
+  max-height 600px
+  width 800px
+  margin-left -400px
+
+// hacky; not needed in bs2.0.2
+.modal-body
+  overflow-y auto
+  max-height 466px

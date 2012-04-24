@@ -1,0 +1,14 @@
+- var statusNs = "plug-" + device.deviceId + "-status"
+- var onNs = "plug_mode-" + device.deviceId + "-on"
+- var offNs = "plug_mode-" + device.deviceId + "-off"
+
+.well.controls
+  a.btn(href="#"+statusNs, data-toggle="modal", data-device-cmd=statusNs) Get Status
+  .pull-right
+    a.btn.btn-success(href="#"+onNs, data-toggle="modal", data-device-cmd=onNs) Turn On
+    &nbsp;
+    a.btn.btn-danger(href="#"+offNs, data-toggle="modal", data-device-cmd=offNs) Turn Off
+
+!= partial("devices_control_modal", {modalTitle: "Smart Plug Status", modalNs: statusNs})
+!= partial("devices_control_modal", {modalTitle: "Turn On Smart Plug", modalNs: onNs})
+!= partial("devices_control_modal", {modalTitle: "Turn Off Smart Plug", modalNs: offNs})

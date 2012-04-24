@@ -1,7 +1,7 @@
 {UserLocation, Devices, SmartPlugProxy} = require "../lib/sdk"
 
 module.exports = require("./simple_controller")
-  caption: "Get Smart Plug Data"
+  caption: "Smart Plug Status"
   apis: [
     {name: "Users: User Location", path: "user_location"}
     {name: "Devices: List User's Devices", path: "list_users_devices"}
@@ -28,7 +28,7 @@ module.exports = require("./simple_controller")
     getDevices = (next) ->
 
       loaded = (model) ->
-        next model.devices()
+        next model
 
       options =
         trace: "List user's devices"
@@ -61,10 +61,14 @@ module.exports = require("./simple_controller")
     getLocation (locationId) ->
       # next, get a list of the user's devices
       getDevices (devices) ->
-        # then, to make this easy, pick the first smart plug we can find
-        plugs = (device for device in devices when device.category is "Load Control")
-        if plugs.length > 0
-          getSmartPlugData plugs[0], locationId
+        deviceId = env.request.query.id
+        if deviceId
+          # if a deviceId was specified, choose that if it exists
+          plug = devices.deviceById deviceId
         else
-          events.fail new Error "The current user does not appear to have any smart plugs to query"
-
+          # else if none was specified, go with the first of its type
+          plug = devices.firstDeviceByCategory "Load Control"
+        if not plug
+          events.fail new Error "No usable smart plug found"
+        else
+          getSmartPlugData plug, locationId

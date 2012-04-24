@@ -1,7 +1,2 @@
 #deferred-content
-  #spinner.hidden
-    img.spinner(src='/img/spinner.gif')
-    p
-    | Reticulating splines...
-
-script $(function () { Tendril.load("#{request.url}"); });
+script $(function () { Tendril.load("#{request.url}", "deferred-content"); });

@@ -11,6 +11,12 @@
     p
     - for device, i in model.data.devices.device
       div(id='device_'+i, class='pill-pane'+(i === 0 ? ' active' : ''))
+        - if (device.category === 'Load Control')
+          != partial('devices_plug_control', {device: device})
+        - if (device.category === 'Thermostat')
+          != partial('devices_thermostat_control', {device: device})
+        h3 Properties
+        p
         table.table.table-bordered
           tbody
             tr
@@ -41,4 +47,4 @@
                   td.span3.label-cell= prop.name
                   - var values = (prop.value instanceof Array) ? prop.value : [prop.value]
                   td.value-cell= values.join(', ')
-          p
+        p

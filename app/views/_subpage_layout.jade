@@ -1,15 +1,18 @@
+- var demoId = "demo" + (locals.ns ? "_" + locals.ns : "")
+- var logId = "log" + (locals.ns ? "_" + locals.ns : "")
+- var apisId = "apis" + (locals.ns ? "_" + locals.ns : "")
 .tabbable
 
   ul.nav.nav-tabs
-    li.active: a(href='#demo', data-toggle='tab') Demo
+    li.active: a(href="#"+demoId, data-toggle="tab") Demo
     - if (locals.error || locals.trace)
-      li: a(href='#log', data-toggle='tab') Request Log
+      li: a(href="#"+logId, data-toggle="tab") Request Log
     - if (locals.apis)
-      li: a(href='#apis', data-toggle='tab') APIs
+      li: a(href="#"+apisId, data-toggle="tab") APIs
 
   .tab-content
 
-    #demo.tab-pane.active
+    .tab-pane.active(id=demoId)
       - if (locals.caption)
         p.lead.caption= caption
       - else
@@ -34,7 +37,7 @@
             | #{error.message}
 
     - if (locals.error || locals.trace)
-      #log.tab-pane!= partial("request_log")
+      .tab-pane(id=logId)!= partial("request_log")
 
     - if (locals.apis)
-      #apis.tab-pane!= partial("api_guide")
+      .tab-pane(id=apisId)!= partial("api_guide")

@@ -6,9 +6,10 @@ exports.devices = require("./subpage_controller")
   subpages: [
     {name: "discovery", title: "Discovery"}
     {name: "consumption", title: "Cost & Consumption"}
-    {name: "thermostat", title: "Thermostat Data"}
-    {name: "thermostat_program", title: "Thermostat Program Data"}
+    {name: "plug", title: "Smart Plug"}
+    {name: "plug_mode", title: "Set Smart Plug Mode", hidden: true}
+    {name: "thermostat", title: "Thermostat"}
+    {name: "thermostat_program", title: "Thermostat Program"}
     {name: "thermostat_hold", title: "Thermostat Hold Status"}
-    {name: "plug", title: "Smart Plug Data"}
-    {name: "generic", title: "Generic Actions"}
+    #{name: "generic", title: "Generic Actions"}
   ]
