@@ -31,5 +31,5 @@ app.dynamicHelpers require("./helpers/application")
 
 require("../config/routes")(app)
 
-app.listen (process.argv?.length and parseInt process.argv[2]) or 3001
+app.listen (process.argv?.length and parseInt process.argv[2]) or process.env.PORT or 3001
 console.log "Listening on port #{app.address().port} in #{app.settings.env} mode"
