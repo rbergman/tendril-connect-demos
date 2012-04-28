@@ -12,7 +12,7 @@ module.exports = (config) ->
     events =
       trace: (req, res, label, elapsed) ->
         console.log "--- #{label} [#{elapsed}ms] ---\n#{req.method} #{req.url} -> #{res.statusCode} #{res.status}"
-        # console.log "--- #{label} ---\n[#{elapsed}ms]\n\n#{req.toString()}\n\n#{res.toString()}\n"
+        #console.log "\n#{req.toString()}\n\n#{res.toString()}\n"
         locals.trace.push request: req, response: res, label: label, elapsed: elapsed
       done: ->
         res.render()

@@ -24,6 +24,20 @@ exports.SetVoltDataCommand = class SetVoltDataCommand extends DeviceActionComman
           "mode": options.mode
     super options
 
+exports.SetVoltDataResult = class SetVoltDataResult extends DeviceActionResult
+
+  @schema
+    "setVoltDataRequest":
+      "@deviceId": "string"
+      "@locationId": "string"
+      "@requestId": "string"
+      "result":
+        "mode": "string"
+        "@networkId": "string"
+  
+  mode: ->
+    @result().mode if @result()
+
 exports.GetVoltDataCommand = class GetVoltDataCommand extends DeviceActionCommand
 
   @schema
@@ -58,9 +72,6 @@ exports.GetVoltDataResult = class GetVoltDataResult extends DeviceActionResult
           "loadControlEventOptedOut": "boolean"
           "loadControlEventReturnMode": "string"
           "loadControlEventId": "string"
-
-  constructor: (data, self) ->
-    super data, self
   
   mode: ->
     @result().mode if @result()
@@ -71,7 +82,7 @@ exports.GetVoltDataResult = class GetVoltDataResult extends DeviceActionResult
 exports.SetVoltDataAction = class SetVoltDataAction extends DeviceAction
 
   @command SetVoltDataCommand
-  @result GetVoltDataResult
+  @result SetVoltDataResult
 
 exports.GetVoltDataAction = class GetVoltDataAction extends DeviceAction
 

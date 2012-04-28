@@ -1,7 +1,7 @@
 - if (locals.elapsed)
   .alert.alert-info #{elapsed}ms effective response time
 - for entry, ei in trace
-  - var traceId = "trace_" + ei + (locals.ns ? "_" + locals.ns : "")
+  - var traceId = "trace_" + ei + (locals.ns ? "_" + ns : "")
   .trace-entry
     div(class='alert '+(statusClass(entry.response)))
       strong: a(href='#'+traceId, data-toggle='trace-panel') #{entry.label}

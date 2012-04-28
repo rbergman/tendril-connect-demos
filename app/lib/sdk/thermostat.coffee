@@ -27,6 +27,21 @@ exports.SetThermostatDataCommand = class SetThermostatDataCommand extends Device
           "temperatureScale": options.temperatureScale or "Fahrenheit"
     super options
 
+exports.SetThermostatDataResult = class SetThermostatDataResult extends DeviceActionResult
+
+  @schema
+    "setThermostatDataRequest":
+      "@deviceId": "string"
+      "@locationId": "string"
+      "@requestId": "string"
+      "result":
+        # @todo review - are these fields right for set results?
+        "setpoint": "float"
+        "mode": "string"
+        "temperatureScale": "string"
+        "currentTemp": "float"
+        "activeLoadControlEvent": "boolean"
+
 exports.GetThermostatDataCommand = class GetThermostatDataCommand extends DeviceActionCommand
 
   @schema
@@ -77,7 +92,7 @@ exports.GetThermostatDataResult = class GetThermostatDataResult extends DeviceAc
 exports.SetThermostatDataAction = class SetThermostatDataAction extends DeviceAction
 
   @command SetThermostatDataCommand
-  @result GetThermostatDataResult
+  @result SetThermostatDataResult
 
 exports.GetThermostatDataAction = class GetThermostatDataAction extends DeviceAction
   
