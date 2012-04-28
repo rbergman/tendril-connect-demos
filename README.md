@@ -6,7 +6,7 @@ This is a sample [Node.js](http://nodejs.org) application for demoing interactio
 
 First clone the repo:
 
-	git clone git@github.com:rbergman/tendril-connect-demos.git
+	git clone git@github.com:TendrilDevProgram/tendril-connect-demos.git
 
 Then, with [Node.js](http://nodejs.org) v0.6.x:
 
