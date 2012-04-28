@@ -3,8 +3,8 @@
 module.exports = require("./simple_controller")
   caption: "Run Building Model Simulation"
   apis: [
-    {name: "Building Model: Create Building Model Action", path: "create_building_model_action"}
-    {name: "Building Model: Query Building Model Action", path: "query_building_model_action"}
+    {name: "Building Model: Create Building Model Simulation", path: "create_building_model_simulation"}
+    {name: "Building Model: Query Building Model Simulation", path: "query_building_model_simulation"}
   ]
 
   action: (env, events) ->
