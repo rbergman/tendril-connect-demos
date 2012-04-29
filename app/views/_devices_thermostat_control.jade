@@ -1,6 +1,19 @@
 - var statusNs = "thermostat-" + device.deviceId + "-status"
+- var changeNs = "thermostat_data-" + device.deviceId + "-data"
 
 .well.controls
   a.btn(href="#"+statusNs, data-toggle="modal", data-device-cmd=statusNs) Get Status
+  .pull-right
+    form.form-inline
+      select.span2(placeholder="Mode", name="mode")
+        option Heat
+        option Cool
+      span &nbsp;to&nbsp;
+      select.span2(placeholder="Mode", placeholder="SetPoint", name="setpoint")
+        - for (var oi = 60; oi <= 80; oi++)
+          option= oi
+      span &nbsp;deg&nbsp;&nbsp;&nbsp;&nbsp;
+      a.btn.btn-success(href="#"+changeNs, data-toggle="modal", data-device-cmd=changeNs) Change
 
 != partial("devices_control_modal", {modalTitle: "Get Thermostat Status", modalNs: statusNs})
+!= partial("devices_control_modal", {modalTitle: "Set Thermostat Data", modalNs: changeNs})

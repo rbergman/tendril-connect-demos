@@ -37,7 +37,13 @@ do ->
       $btn = $(this)
       cmd = $btn.attr("data-device-cmd")
       [type, id, action] = cmd.split "-"
-      Tendril.load("/devices/#{type}?ns=#{type}-#{id}-#{action}&id=#{id}&action=#{action}", "#{type}-#{id}-#{action}_content")
+      data = ""
+      if action is "data"
+        enc = encodeURIComponent
+        params = $btn.parent().find("input, textarea, select").map(-> "#{enc $(@).attr('name')}=#{enc $(@).val()}")
+        params = [].slice.apply params
+        data = "&" + (params.join "&") if params.length > 0
+      Tendril.load("/devices/#{type}?ns=#{type}-#{id}-#{action}&id=#{id}&action=#{action}#{data}", "#{type}-#{id}-#{action}_content")
 
   window.Tendril = 
 

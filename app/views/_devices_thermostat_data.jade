@@ -1,0 +1,4 @@
+- if (deviceActionFailed(model))
+  .alert.alert-error= model.failureMessage()
+- else
+  .win Set to #{model.mode()} #{model.setpoint()} #{model.temperatureScale()}!

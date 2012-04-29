@@ -40,7 +40,18 @@ exports.SetThermostatDataResult = class SetThermostatDataResult extends DeviceAc
         "mode": "string"
         "temperatureScale": "string"
         "currentTemp": "float"
-        "activeLoadControlEvent": "boolean"
+
+  setpoint: ->
+    @result().setpoint if @result()
+
+  mode: ->
+    @result().mode if @result()
+
+  temperatureScale: ->
+    @result().temperatureScale if @result()
+  
+  currentTemp: ->
+    @result().currentTemp if @result()
 
 exports.GetThermostatDataCommand = class GetThermostatDataCommand extends DeviceActionCommand
 

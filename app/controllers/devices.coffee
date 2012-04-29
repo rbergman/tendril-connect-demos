@@ -9,6 +9,7 @@ exports.devices = require("./subpage_controller")
     {name: "plug", title: "Smart Plug"}
     {name: "plug_mode", title: "Set Smart Plug Mode", hidden: true}
     {name: "thermostat", title: "Thermostat"}
+    {name: "thermostat_data", title: "Set Thermostat Data", hidden: true}
     {name: "thermostat_program", title: "Thermostat Program"}
     {name: "thermostat_hold", title: "Thermostat Hold Status"}
     #{name: "generic", title: "Generic Actions"}
