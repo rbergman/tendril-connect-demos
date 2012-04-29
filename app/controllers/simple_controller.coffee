@@ -1,6 +1,8 @@
 module.exports = (config) ->
 
   (req, res, oauth, locals) ->
+
+    start = Date.now()
   
     locals[k] = v for own k, v of config
   
@@ -15,8 +17,10 @@ module.exports = (config) ->
         #console.log "\n#{req.toString()}\n\n#{res.toString()}\n"
         locals.trace.push request: req, response: res, label: label, elapsed: elapsed
       done: ->
+        env.locals.elapsed = Date.now() - start
         res.render()
       fail: (err) ->
+        env.locals.elapsed = Date.now() - start
         locals.error = err
         locals.notFound = true if err.response?.statusCode is 404
         res.render()

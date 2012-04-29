@@ -43,9 +43,8 @@ module.exports = require("./simple_controller")
       
       env.locals.device = device
 
-      ready = (model, elapsed) ->
+      ready = (model) ->
         env.locals.model = model
-        env.locals.elapsed = elapsed
         events.done()
 
       options =
