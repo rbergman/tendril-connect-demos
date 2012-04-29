@@ -20,7 +20,7 @@ request = (method, url, accessToken, body, label) ->
     "Access_Token": accessToken
   headers["Content-Type"] = "application/xml" if body
   options = url.toOptions method: method, headers: headers
-  xreq = new RequestTrace method, url, headers, body
+  xreq = new RequestTrace method, url.toString(), headers, body
   start = Date.now()
   req = transport.request options, (res) ->
     data = ""
