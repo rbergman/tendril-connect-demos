@@ -2,6 +2,8 @@
 
 This is a sample [Node.js](http://nodejs.org) application for demoing interactions with the [Tendril Connect HTTP APIs](https://dev.tendrilinc.com/docs).  It is a work in progress, so many areas are incomplete or less functional than might otherwise be desired.
 
+For the lazy, you may be able to find the app running [here](http://freezing-robot-5534.herokuapp.com).
+
 # Installation
 
 First clone the repo:
