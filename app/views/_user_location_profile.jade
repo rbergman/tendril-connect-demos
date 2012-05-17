@@ -1,4 +1,47 @@
-.alert
-  strong TODO:&nbsp;
-  | A demo UI
-pre= JSON.stringify(model.data, null, 2)
+table.table.table-bordered
+  tr
+    td.section-cell(colspan='2') Home Detail Category
+  - var homeDetail = model.homeDetailCategory()
+  tr
+    td.span3.label-cell Dwelling Type
+    td.value-cell= homeDetail.dwellingType
+  tr
+    td.span3.label-cell Dwelling Size
+    td.value-cell= homeDetail.dwellingSize
+  tr
+    td.span3.label-cell HVAC Cooling Config
+    td.value-cell= homeDetail.hvacCoolingConfig
+  tr
+    td.span3.label-cell HVAC Heating Config
+    td.value-cell= homeDetail.hvacHeatingConfig
+  tr
+    td.span3.label-cell Pool Pump?
+    td.value-cell= homeDetail.poolPump
+  tr
+    td.section-cell(colspan='2') Household Category
+  - var household = model.householdCategory()
+  tr
+    td.span3.label-cell Num People In Age Group 1
+    td.value-cell= household.numPeopleInAgeGroup1
+  tr
+    td.span3.label-cell Num People In Age Group 2
+    td.value-cell= household.numPeopleInAgeGroup2
+  tr
+    td.span3.label-cell Num People In Age Group 3
+    td.value-cell= household.numPeopleInAgeGroup3
+  tr
+    td.span3.label-cell Num People In Age Group 4
+    td.value-cell= household.numPeopleInAgeGroup4
+  tr
+    td.section-cell(colspan='2') Relay Detail Category
+  - var relayDetails = model.relayDetailCategory().relayDetail
+  - for relayDetail in relayDetails
+    tr
+      td.span3.label-cell.subsection-cell Relay Name
+      td.value-cell.subsection-cell= relayDetail.relayName
+    tr
+      td.span3.label-cell Id
+      td.value-cell= relayDetail.id
+    tr
+      td.span3.label-cell Device Id
+      td.value-cell= relayDetail.deviceId
