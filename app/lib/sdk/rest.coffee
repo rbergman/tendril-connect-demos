@@ -58,8 +58,9 @@ class Trace
       else
         @body
   toString: (pretty) ->
+    redactions = ["Set-Cookie", "Access_Token"]
     str = ""
-    str += "\n#{k}: #{if k is 'Access_Token' then '[redacted]' else v}" for own k, v of @headers
+    str += "\n#{k}: #{if k in redactions then '[redacted]' else v}" for own k, v of @headers
     str += "\n\n#{if pretty then @formatBody() else @body}" if @body
     str
 

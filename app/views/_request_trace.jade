@@ -23,7 +23,7 @@
         .line.strong HTTP/1.1 #{res.statusCode} #{res.status}
         - if (res.headers)
           - each v, k in res.headers
-            .line.weak #{k}: #{v}
+            .line.weak #{k}: #{k === 'Set-Cookie' ? '[redacted]' : v}
         - if (res.body)
           .line &nbsp;
           .body= res.formatBody()
