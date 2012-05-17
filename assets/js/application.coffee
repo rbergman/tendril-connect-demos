@@ -43,13 +43,13 @@ do ->
         params = $btn.parent().find("input, textarea, select").map(-> "#{enc $(@).attr('name')}=#{enc $(@).val()}")
         params = [].slice.apply params
         data = "&" + (params.join "&") if params.length > 0
-      Tendril.load("/devices/#{type}?ns=#{type}-#{id}-#{action}&id=#{id}&action=#{action}#{data}", "#{type}-#{id}-#{action}_content")
+      Tendril.load("/devices/#{type}?ns=#{cmd}&id=#{id}&action=#{action}#{data}", "#{cmd}_content")
 
   window.Tendril = 
 
     load: (url, elId) ->
       $deferred = $("#" + elId)
-      $deferred.html("<div class='spinner hidden'><img src='/img/spinner.gif'><p/>Reticulating splines...</div>")
+      $deferred.html("<div class='spinner hidden'><img src='/img/spinner.gif'><p/>Loading...</div>")
       $deferred.find(".spinner").delay(400).fadeIn(100)
       done = (html) ->
         $deferred.hide().html(html).fadeIn(100)
