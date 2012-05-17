@@ -33,15 +33,16 @@ table.table.table-bordered
     td.span3.label-cell Num People In Age Group 4
     td.value-cell= household.numPeopleInAgeGroup4
   tr
-    td.section-cell(colspan='2') Relay Detail Category
-  - var relayDetails = model.relayDetailCategory().relayDetail
-  - for relayDetail in relayDetails
-    tr
-      td.span3.label-cell.subsection-cell Relay Name
-      td.value-cell.subsection-cell= relayDetail.relayName
-    tr
-      td.span3.label-cell Id
-      td.value-cell= relayDetail.id
-    tr
-      td.span3.label-cell Device Id
-      td.value-cell= relayDetail.deviceId
+    - if (model.relayDetailCategory())
+      td.section-cell(colspan='2') Relay Detail Category
+      - var relayDetails = model.relayDetailCategory().relayDetail
+      - for relayDetail in relayDetails
+        tr
+          td.span3.label-cell.subsection-cell Relay Name
+          td.value-cell.subsection-cell= relayDetail.relayName
+        tr
+          td.span3.label-cell Id
+          td.value-cell= relayDetail.id
+        tr
+          td.span3.label-cell Device Id
+          td.value-cell= relayDetail.deviceId
