@@ -6,7 +6,9 @@
       != partial("request_trace", {trace: [error]})
     - else
       p.lead Error
+      p
       alert.alert-error= locals.error.toString()
   - else
     p.lead Unknown Error
+    p
     .alert.alert-error Unknown failure; check the server logs for more information

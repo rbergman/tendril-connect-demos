@@ -4,25 +4,28 @@
 - var changeNs = "thermostat_data-" + device.deviceId + "-data"
 
 .well.controls
-  .btn-group(style="display: inline-block")
-    a.btn.dropdown-toggle(href="#", data-toggle="dropdown")
-      | States&nbsp;
-      span.caret
-    ul.dropdown-menu
-      li: a(href="#"+statusNs, data-toggle="modal", data-device-cmd=statusNs) Get Status
-      li: a(href="#"+programNs, data-toggle="modal", data-device-cmd=programNs) Get Program
-      li: a(href="#"+holdNs, data-toggle="modal", data-device-cmd=holdNs) Get Hold Status
-  .pull-right
-    form.form-inline
-      select.narrow(name="mode")
-        option Heat
-        option Cool
-      span &nbsp;to&nbsp;
-      select.narrow(placeholder="Mode", name="setpoint")
-        - for (var oi = 60; oi <= 80; oi++)
-          option(selected=(oi===70?'selected':null))= oi
-      span &nbsp;deg&nbsp;&nbsp;&nbsp;&nbsp;
-      a.btn.btn-success(href="#"+changeNs, data-toggle="modal", data-device-cmd=changeNs) Change
+  ul.nav.nav-tabs
+    li.active: a(href="#"+statusNs+"_form", data-toggle="tab") Status
+    li: a(href="#"+programNs+"_form", data-toggle="tab") Program
+    li: a(href="#"+holdNs+"_form", data-toggle="tab") Hold Status
+  .tab-content
+    .tab-pane.active(id=statusNs+"_form")
+      a.btn(href="#"+statusNs, data-toggle="modal", data-device-cmd=statusNs) Get Status
+      .pull-right
+        form.form-inline
+          select.narrow(name="mode")
+            option Heat
+            option Cool
+          span &nbsp;to&nbsp;
+          select.narrow(placeholder="Mode", name="setpoint")
+            - for (var oi = 60; oi <= 80; oi++)
+              option(selected=(oi===70?'selected':null))= oi
+          span &nbsp;deg&nbsp;&nbsp;&nbsp;&nbsp;
+          a.btn.btn-success(href="#"+changeNs, data-toggle="modal", data-device-cmd=changeNs) Change
+    .tab-pane(id=programNs+"_form")
+      a.btn(href="#"+programNs, data-toggle="modal", data-device-cmd=programNs) Get Program
+    .tab-pane(id=holdNs+"_form")
+      a.btn(href="#"+holdNs, data-toggle="modal", data-device-cmd=holdNs) Get Hold Status
 
 != partial("devices_control_modal", {modalTitle: "Get Thermostat Status", modalNs: statusNs})
 != partial("devices_control_modal", {modalTitle: "Get Thermostat Program", modalNs: programNs})
